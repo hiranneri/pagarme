@@ -5,5 +5,6 @@ const cartaoController = require('../controllers/CartaoController')
 
 routes.get('/cartoes', cartaoController.index)
 routes.post('/cartoes',cartaoController.create)
+routes.post('/teste/transacao', cartaoController.transacao);
 
 module.exports = routes;
