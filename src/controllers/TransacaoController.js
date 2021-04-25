@@ -19,6 +19,7 @@ module.exports = {
         let datapagto;
         let hoje = new Date();
         let fee;
+        let valor_original = valor;
         const cartao = {
             bandeira,
             nrcartao,
@@ -43,7 +44,8 @@ module.exports = {
             descricao,
             valor,
             fee, //criar campo
-            created_at: hoje
+            created_at: hoje,
+            valor_original
         };
         
         const payables = {
@@ -84,8 +86,8 @@ module.exports = {
             const transacoesAvaliable = await knex.from('cartoes').innerJoin('transacoes','cartoes.id','transacoes.cartoes_id')
             .innerJoin('payables','transacoes.id','payables.transacoes_id').where('payables.tipo', '=', 'DÉBITO')
             .select(
-                'bandeira','nrcartao','nomeportador','datavalidade','codigoverificacao','descricao','valor','transacoes.created_at',
-                'tipo','datapagto'
+                'bandeira','nrcartao','nomeportador','datavalidade','codigoverificacao','descricao','valor as valor_final','valor_original as valor'
+                ,'transacoes.created_at','tipo','datapagto'
             )
             return res.status(200).json(transacoesAvaliable)
         } catch (error) {
@@ -98,8 +100,8 @@ module.exports = {
             const transacoesWaiting = await knex.from('cartoes').innerJoin('transacoes','cartoes.id','transacoes.cartoes_id')
             .innerJoin('payables','transacoes.id','payables.transacoes_id').where('payables.tipo', '=', 'CRÉDITO')
             .select(
-                'bandeira','nrcartao','nomeportador','datavalidade','codigoverificacao','descricao','valor','transacoes.created_at',
-                'tipo','datapagto'
+                'bandeira','nrcartao','nomeportador','datavalidade','codigoverificacao','descricao','valor as valor_final','valor_original as valor',
+                'transacoes.created_at','tipo','datapagto'
             )
             return res.status(200).json(transacoesWaiting)
         } catch (error) {
@@ -111,7 +113,7 @@ module.exports = {
         try {
             const transacoes = await knex.from('cartoes').innerJoin('transacoes','cartoes.id','transacoes.cartoes_id')
             .innerJoin('payables','transacoes.id','payables.transacoes_id').select('bandeira','nrcartao','nomeportador',
-            'datavalidade','codigoverificacao','descricao','valor','transacoes.created_at','tipo','datapagto')
+            'datavalidade','codigoverificacao','descricao','valor as valor_final','valor_original as valor','transacoes.created_at','tipo','datapagto')
             return res.status(200).json(transacoes);
         } catch (error) {
             console.log(error)
