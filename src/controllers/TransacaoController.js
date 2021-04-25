@@ -11,15 +11,21 @@ module.exports = {
             codigoverificacao,
             descricao,
             valor,
-            formapagto,
-            
-            
+            formapagto,         
         } = req.body;
         let status;
         let datapagto;
         let hoje = new Date();
         let fee;
         let valor_original = valor;
+        let digitosCartao = nrcartao.slice(-4)
+        let numeroCartao = '';
+        let vezes = nrcartao.length-4;
+        for(let i=0;i<vezes;i++){
+            numeroCartao+= '*'
+        }
+        nrcartao = numeroCartao+digitosCartao;
+
         const cartao = {
             bandeira,
             nrcartao,
@@ -27,6 +33,7 @@ module.exports = {
             datavalidade,
             codigoverificacao
         };
+        console.log(cartao)
         if(formapagto==='DÉBITO'){ //3
           status = 'paid',
           datapagto = hoje
@@ -66,12 +73,9 @@ module.exports = {
           .then((id)=>{
             payables.transacoes_id = id[0];
           
-          })
-  
-          
-          console.log('obj pay', payables)
-          await trx('payables').insert(payables);
-  
+          })          
+          await trx('payables').insert(payables); 
+           
           await trx.commit();
           return res.status(201).send({"message":'OK'});
         } catch (error) {
