@@ -1,19 +1,22 @@
 const express = require('express');
-const routes = require('./routes/routes')
-
+const cors = require('cors');
 const app = express();
+const bodyParser = require('body-parser')
+app.use(cors())
+
 app.use(express.json())
-app.use(routes);
 
 app.use((req,res,next)=>{
-    const erro = new Error('Not found')
-    erro.status = 400
-    next(erro)
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3333');
+    res.header("Access-Control-Allow-Methods", "GET, POST");
+    res.header(
+        "Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept"
+      );
+      next();
+
 })
 
-app.use((error,req,res,next)=>{
-    res.status(error.status || 500)
-    res.json({error: error.message})
-})
+app.use('/', require('./routes/transacoes/transacoesRouter'));
 
 app.listen(3333, ()=> console.log('Server is running'));
