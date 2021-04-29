@@ -4,14 +4,21 @@ const transacaoData = require('../data/TransacaoData')
 
 module.exports = {
     async transacao(req,res,next){
-        const cartao = criarCartao(req);
-        const transacao = criarTransacao(req);
-        const payables = criarPayables(req); 
-        
-        const result = transacaoData.createTransacao(cartao,transacao,payables)
-        result.then((resposta)=>{            
-            return res.status(201).send(resposta);
-        })
+        let formapagto = req.body.formapagto;
+        if(formapagto === 'DÉBITO' || formapagto==='CRÉDITO'){
+            const cartao = criarCartao(req);
+            const transacao = criarTransacao(req);
+            const payables = criarPayables(req); 
+            
+            const result = transacaoData.createTransacao(cartao,transacao,payables)
+            result.then((resposta)=>{            
+                return res.status(201).send(resposta);
+            })
+
+        }else{
+            return res.status(400).json({"message": "Informe uma forma de pagamento válida! DÉBITO ou CRÉDITO"})
+        }
+
     },
     async avaliable(req,res,next){
         try {
