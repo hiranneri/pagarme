@@ -16,7 +16,7 @@ router.post('/transacao', [
     body("valor").isNumeric().withMessage('Valor da Transação deverá ser numérico'),
     body("datavalidade").isDate().withMessage('Data de Validade deverá será uma data válida'),
     body("formapagto").isLength({min:6, max:7}).withMessage('Forma de pagamento deverá ter no mínimo 6 e no máximo 7 caracteres'),
-], (req,res) =>{
+], (req,res,next) =>{
     var errors = validationResult(req);
     if(!errors.isEmpty()){
         let erro = { 
@@ -27,7 +27,7 @@ router.post('/transacao', [
         erros.push(erro)
         return res.status(400).json({erros: erros})
     }
-    transacaoController.transacao
+    transacaoController.transacao(req,res);
 });
 
 

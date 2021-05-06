@@ -60,6 +60,15 @@ module.exports = {
             return {"message":'Salvo com sucesso'};
         } catch (error) {
             console.log(error.message)
+            return {"messageError":"Ocorreu um erro, tente novamente"};
+        }
+    },
+    async countTransacoes(){
+        try {
+            const quantidadeTransacoes = await knex.from('transacoes').count('id', {as:'quantidade'});
+            return quantidadeTransacoes;
+        } catch (error) {
+            console.log(error)
             return {"message":"Ocorreu um erro, tente novamente"};
         }
     }

@@ -4,28 +4,32 @@ const transacaoData = require('../data/TransacaoData')
 
 module.exports = {
     async transacao(req,res,next){
-        let formapagto = req.body.formapagto;
-        if(formapagto === 'DÉBITO' || formapagto==='CRÉDITO'){
-            const cartao = criarCartao(req);
-            const transacao = criarTransacao(req);
-            const payables = criarPayables(req); 
+        try {
+            let formapagto = req.body.formapagto;
+            if(formapagto === 'DÉBITO' || formapagto==='CRÉDITO'){
+                const cartao = this.criarCartao(req)
+                const transacao = this.criarTransacao(req);
+                const payables = this.criarPayables(req); 
+                
+                const transacaoResult = await transacaoData.createTransacao(cartao,transacao,payables)
+                 
+                return res.status(201).send(transacaoResult);
+         
+    
+            }else{
+                return res.status(400).json({"message": "Informe uma forma de pagamento válida! DÉBITO ou CRÉDITO"})
+            }
             
-            const result = transacaoData.createTransacao(cartao,transacao,payables)
-            result.then((resposta)=>{            
-                return res.status(201).send(resposta);
-            })
-
-        }else{
-            return res.status(400).json({"message": "Informe uma forma de pagamento válida! DÉBITO ou CRÉDITO"})
+        } catch (error) {
+            console.error(error.message)
         }
 
     },
     async avaliable(req,res,next){
         try {
-           const transacaoDebito = transacaoData.findAllDebito();
-           transacaoDebito.then((results)=>{
-               return res.status(200).json(results);
-           })
+           const transacaoDebito = await transacaoData.findAllDebito();          
+            return res.status(200).json(transacaoDebito);
+        
             
         } catch (error) {
             console.log(error)
@@ -34,11 +38,9 @@ module.exports = {
     },
     async waiting(req,res,next){
         try {
-            const transacaoCredito = transacaoData.findAllCredito();
-            transacaoCredito.then((results)=>{
-                return res.status(200).json(results)
-
-            })
+            const transacaoCredito = await transacaoData.findAllCredito();
+            return res.status(200).json(transacaoCredito)
+          
         } catch (error) {
             console.log(error)
             return res.status(500).json({"message":"Ocorreu um erro, tente novamente"});
@@ -46,26 +48,26 @@ module.exports = {
     },
     async transacoes(req,res,next){
         try {
-            const transacoes = transacaoData.findAll();
-            transacoes.then((results)=>{
-                return res.status(200).json(results);
-            })            
+            const transacoes = await transacaoData.findAll();
+           
+            return res.status(200).json(transacoes);
+          
             
         } catch (error) {
             console.log(error)
             return res.status(500).json({"message":"Ocorreu um erro, tente novamente"});
         }
-    }
+    },
 
-} 
-function criarTransacao(requisicao){
+ 
+criarTransacao(requisicao){
     const transacao = requisicao.body;
     return {
         descricao: transacao.descricao,
         valor: transacao.valor,
     }
-}
-function criarCartao(requisicao){
+},
+criarCartao(requisicao){
     const transacao = requisicao.body;
     let nrcartao = transacao.nrcartao;
     let digitosCartao = nrcartao.slice(-4);
@@ -84,11 +86,12 @@ function criarCartao(requisicao){
         codigoverificacao: transacao.codigoverificacao,
     };
     return cartao;    
-}
-function criarPayables(requisicao){
+},
+criarPayables(requisicao){
     const transacao = requisicao.body;
     let status,fee;
     let hoje = new Date();
+    let datapagto;
     let valor = transacao.valor;
     let formapagto = transacao.formapagto;
     if(formapagto==='DÉBITO'){ 
@@ -101,9 +104,13 @@ function criarPayables(requisicao){
         datapagto = moment(hoje).add(30,'day'),
         fee=0.95;
         valor = valor * fee;
+      }else{
+          return {
+              message: 'Forma de pagto inválida'
+          }
       }
     const payables = {
-        formapagto: transacao.formapagto,
+        formapagto,
         status,
         datapagto,
         fee,
@@ -113,4 +120,5 @@ function criarPayables(requisicao){
     return payables;
 
     
+}
 }
