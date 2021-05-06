@@ -16,6 +16,7 @@ app.use((req,res,next)=>{
 
 })
 
-app.use('/', require('./routes/transacoes/transacoesRouter'));
+app.use('/transacao', require('./routes/transacoes/transacoesRouter'));
+app.use('/login', require('./routes/login/loginRouter'))
 
 app.listen(3333, ()=> console.log('Server is running'));

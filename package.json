@@ -21,6 +21,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.10.1",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.95.4",
     "moment": "^2.29.1",
     "pg": "^8.6.0"

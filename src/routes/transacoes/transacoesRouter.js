@@ -1,13 +1,14 @@
 const {body, validationResult} = require('express-validator')
 const express = require('express')
 const router = express.Router();
-const transacaoController = require('../../controllers/TransacaoController')
+const transacaoController = require('../../controllers/TransacaoController');
+const loginController = require('../../controllers/LoginController');
 
 
-router.get('/transacao', transacaoController.transacoes)
-router.get('/transacao/debito', transacaoController.avaliable)
-router.get('/transacao/credito', transacaoController.waiting)
-router.post('/transacao', [
+router.get('/', loginController.verifyJWT, transacaoController.transacoes)
+router.get('/debito', transacaoController.avaliable)
+router.get('/credito', transacaoController.waiting)
+router.post('/', [
     body("bandeira").isLength({min:2,max:30}).withMessage('Bandeira deverá ter no mínimo 2 e no máximo 30 caracteres'),    
     body("nrcartao").isLength({min:15, max:30}).withMessage('Número do Cartão deverá ter no mínimo 15 e no máximo 30 caracteres'),
     body("nomeportador").isLength({min:5, max:100}).withMessage('Nome do Portador deverá ter no mínimo 5 e no máximo 100 caracteres'),
