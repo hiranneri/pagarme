@@ -12,10 +12,10 @@ module.exports= {
        
             await trx('contas').insert(conta); 
             await trx.commit();
-            return true;
+            return {"message":"Salvo com sucesso","criado":true};
         } catch (error) {
             console.log(error.message)
-            return false;
+            return {"message":error.message,"criado":false};
         }
     },
     async validarUsuario(usuario){
