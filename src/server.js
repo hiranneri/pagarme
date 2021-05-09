@@ -4,6 +4,7 @@ const app = express();
 app.use(cors())
 
 app.use(express.json())
+const port = process.env.PORT || 3333
 
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3333');
@@ -19,4 +20,4 @@ app.use((req,res,next)=>{
 app.use('/transacao', require('./routes/transacoes/transacoesRouter'));
 app.use('/login', require('./routes/login/loginRouter'))
 
-app.listen(3333, ()=> console.log('Server is running'));
+app.listen(port, ()=> console.log('Server is running'));
