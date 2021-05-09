@@ -62,13 +62,19 @@ module.exports= {
             }
             
             const usuario = await loginData.validarUsuario(usuarioRequisicao)
-            let validaSenha = bcrypt.compareSync(senha,usuario[0].senha)
+            if(usuario.length>0){
+                let validaSenha = bcrypt.compareSync(senha,usuario[0].senha)
+    
+                if(validaSenha){
+                   return true
+                }          
+                return false
+                 
 
-            if(validaSenha){
-               return true
-            }          
-            return false
-             
+            }else{
+                return false;
+            }
+
          } catch (error) {
              console.log(error)
              return res.status(500).json({"message":"Ocorreu um erro, tente novamente"});
