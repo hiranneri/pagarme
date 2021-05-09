@@ -27,15 +27,15 @@ module.exports= {
                 datafechamento:dataFechamento
             }        
             const result = await loginData.create(usuario, conta);
-            conta = utils.formatarConta(conta);
-
             if(result){
+                conta = utils.formatarConta(conta);
                 return res.status(201).json({
                     conta,
                     usuario: req.body
                 })
 
             }else{
+                console.log('erro no Data')
                 return res.status(500).json({message:"Ocorreu um erro, tente novamente"})
             }
             
