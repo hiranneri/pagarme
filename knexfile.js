@@ -7,8 +7,8 @@ module.exports = {
     connection: {
       database:'PagarMe',
       user:'postgres',
-      password: 'docker',
-      port:'5433',
+      password: '123',
+      port:'5432',
       host:'localhost',
       
     },

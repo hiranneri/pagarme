@@ -8,9 +8,8 @@ module.exports = {
 
     },
     hashSenha(senha){
-        const saltRounds = 10
-        const salt = bcrypt.genSaltSync(saltRounds);
-        const hash = bcrypt.hashSync(senha,salt);
+        const salt = bcrypt.genSaltSync()
+        const hash = bcrypt.hashSync(senha, salt)
         return hash;
     },
     formatarConta(conta){
