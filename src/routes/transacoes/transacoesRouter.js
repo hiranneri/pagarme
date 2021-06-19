@@ -1,34 +1,51 @@
-const {body, validationResult} = require('express-validator')
-const express = require('express')
-const router = express.Router();
-const transacaoController = require('../../controllers/TransacaoController');
-const loginController = require('../../controllers/LoginController');
+const router = require('express').Router()
+const TransacaoController = require('../../controllers/TransacaoController');
+const Transacao = require('../../model/Transacao');
 
-
-router.get('/', loginController.verifyJWT, transacaoController.transacoes)
-router.get('/debito',loginController.verifyJWT, transacaoController.avaliable)
-router.get('/credito',loginController.verifyJWT, transacaoController.waiting)
-router.post('/', loginController.verifyJWT, [
-    body("bandeira").isLength({min:2,max:30}).withMessage('Bandeira deverá ter no mínimo 2 e no máximo 30 caracteres'),    
-    body("nrcartao").isLength({min:15, max:30}).withMessage('Número do Cartão deverá ter no mínimo 15 e no máximo 30 caracteres'),
-    body("nomeportador").isLength({min:5, max:100}).withMessage('Nome do Portador deverá ter no mínimo 5 e no máximo 100 caracteres'),
-    body("codigoverificacao").isLength({max:4, min:2}).isNumeric().withMessage('Código de Verificação deverá ter no mínimo 2 e no máximo 4 caracteres'),
-    body("descricao").isLength({min:3, max:100}).withMessage('Descrição deverá ter no mínimo 3 e no máximo 100 caracteres'),
-    body("valor").isNumeric().withMessage('Valor da Transação deverá ser numérico'),
-    body("datavalidade").isDate().withMessage('Data de Validade deverá será uma data válida'),
-    body("formapagto").isLength({min:6, max:7}).withMessage('Forma de pagamento deverá ter no mínimo 6 e no máximo 7 caracteres'),
-], (req,res,next) =>{
-    var errors = validationResult(req);
-    if(!errors.isEmpty()){
-        let erro = { 
-            campo:errors.array()[0].param,
-            mensagem: errors.array()[0].msg
-        }
-        let erros = Array();
-        erros.push(erro)
-        return res.status(400).json({erros: erros})
+router.get('/:id', async (requisicao, resposta, proximo)=>{
+    try {
+        const usuarioId = requisicao.params.id
+        const transacao = new Transacao({usuario: usuarioId})
+        const transacoes = await transacao.listar()
+        return resposta.status(200).json(transacoes)
+        
+    } catch (erro) {
+        proximo(erro)
     }
-    transacaoController.transacao(req,res);
+})
+
+router.get('/:id/debito', async (requisicao, resposta, proximo)=>{
+    try {
+        const usuarioId = requisicao.params.id
+        const transacao = new Transacao({usuario: usuarioId})
+        const transacoesAvaliable = await transacao.avaliable()
+        return resposta.status(200).json(transacoesAvaliable)
+    } catch (erro) {
+        proximo(erro)
+    }   
+})
+
+router.get('/:id/credito', async (requisicao, resposta, proximo)=>{
+    try {
+        const usuarioId = requisicao.params.id
+        const transacao = new Transacao({usuario: usuarioId})
+        const transacaoWaiting = await transacao.waiting()
+        return resposta.status(200).json(transacaoWaiting)
+    } catch (erro) {
+        proximo(erro)
+    }   
+})
+
+router.post('/:id', async (requisicao,resposta,proximo) =>{
+    try {
+        const id = requisicao.params.id
+        const dados = Object.assign({}, requisicao.body, {usuario: id})
+        let transacao = await TransacaoController.transacao(dados)
+        return resposta.status(201).json({transacao})
+        
+    } catch (erro) {
+        proximo(erro)
+    }
 });
 
 

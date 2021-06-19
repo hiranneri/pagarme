@@ -20,10 +20,14 @@ app.use((req,res,next)=>{
 
 })
 
-app.use('/transacao', require('./routes/transacoes/transacoesRouter'));
 
 const routerLogin = require('./routes/login/loginRouter');
 app.use('/login', routerLogin)
+
+
+const routerTransacoes = require('./routes/transacoes/transacoesRouter');
+app.use('/transacao', routerTransacoes);
+
 
 app.use((erro, requisicao, resposta, proximo)=>{
   if(erro instanceof NaoEncontrado){
