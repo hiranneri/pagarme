@@ -7,7 +7,6 @@ const PreenchimentoIncorreto = require('./erros/PreeenchimentoIncorreto')
 const TokenInvalido = require('./erros/TokenInvalido')
 const LoginSenhaIncorretos = require('./erros/LoginSenhaInvalidos')
 app.use(express.json())
-const port = process.env.PORT || 3333
 
 app.use((req,res,next)=>{
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -46,4 +45,4 @@ app.use((erro, requisicao, resposta, proximo)=>{
 
 })
 
-app.listen(port, ()=> console.log('Server is running'));
+module.exports = app
