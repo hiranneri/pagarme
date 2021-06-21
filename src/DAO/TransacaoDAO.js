@@ -6,7 +6,7 @@ module.exports = {
         .innerJoin('transacoes','cartoes.id','transacoes.cartoes_id')
         .innerJoin('payables','transacoes.id','payables.transacoes_id')
         .where('transacoes.usuario_id', usuarioID)
-        .select('bandeira','nrcartao','nomeportador',
+        .select('cartoes.id as idCartao','bandeira','nrcartao','nomeportador',
         'datavalidade','codigoverificacao','descricao',
         'transacoes.created_at','formapagto','datapagto','transacoes.valor as valortransacao',
         'payables.valor_descontado as valordescontado')

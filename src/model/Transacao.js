@@ -43,22 +43,60 @@ class Transacao {
         if(transacoes.length===0){
             throw new NaoEncontrado('Não foram localizados as transacoes para esse usuário')
         }
-        return transacoes
+       
+        const dados = this.formatarRespostaBanco(transacoes)
+
+        return dados
     }
+    formatarRespostaBanco(transacoes){
+        const cartoes = []
+        const transacaoParaClient = []
+        for(let transacao of transacoes){
+           
+            cartoes.push(
+                {
+                    id:transacao.idCartao,
+                    bandeira: transacao.bandeira,
+                    numerocartao: transacao.nrcartao,
+                    nomeportador: transacao.nomeportador,
+                    codigoverificacao: transacao.codigoverificacao,
+                    datavalidade: transacao.datavalidade
+                })
+                
+            transacaoParaClient.push(
+                {
+                    cartaoID: transacao.idCartao,
+                    descricao: transacao.descricao,
+                    datapagamento: transacao.datapagto,
+                    formapagamento: transacao.formapagto,
+                    valortransacao: transacao.valortransacao,
+                    valordescontado: transacao.valordescontado
+                }
+            )
+        }
+        let dados = {
+            cartoes: cartoes,
+            'transacoes': transacaoParaClient
+        }
+        return dados;
+    }
+
     async avaliable(){
         const transacaoDebito = await TransacaoDAO.findAllDebito(this.usuario);          
         if(transacaoDebito.length===0){
             throw new NaoEncontrado('Não foram localizados as transacoes avaliables para esse usuário')
         }
-        return transacaoDebito;         
+        let dadosDebito = this.formatarRespostaBanco(transacaoDebito)
+        return dadosDebito;         
       
     }
-    async waiting(){
-        const transacaoesWaiting = await TransacaoDAO.findAllCredito(this.usuario)
-        if(transacaoesWaiting.length===0){
+    async credito(){
+        const transacaoesCredito = await TransacaoDAO.findAllCredito(this.usuario)
+        if(transacaoesCredito.length===0){
             throw new NaoEncontrado('Não foram localizados as transacoes para esse usuário')
         }
-        return transacaoesWaiting
+        let dadosCredito = this.formatarRespostaBanco(transacaoesCredito)
+        return dadosCredito
     }
 
 }

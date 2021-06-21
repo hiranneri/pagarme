@@ -30,7 +30,7 @@ router.get('/:id/credito', verifyJWT, async (requisicao, resposta, proximo)=>{
     try {
         const usuarioId = requisicao.params.id
         const transacao = new Transacao({usuario: usuarioId})
-        const transacaoWaiting = await transacao.waiting()
+        const transacaoWaiting = await transacao.credito()
         return resposta.status(200).json(transacaoWaiting)
     } catch (erro) {
         proximo(erro)
