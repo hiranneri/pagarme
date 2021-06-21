@@ -27,35 +27,35 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 # Descrição dos endpoints
  <h3>Login</h3>
 <code> 
-	POST (Cadastro de Usuário) - {{ _.base_url }}/login/cadastro &nbsp;
-	Exemplo do body de requisição:
+	POST (Cadastro de Usuário) - {{ _.base_url }}/login/cadastro  <br/>
+	Exemplo do body de requisição:  <br/>
 	{
-		"nome":"Alberto", <br>
-		"sobrenome": "Neri", <br>
-		"datanascimento": "1993-06-10", <br>
-		"rg": "488879865", <br>
-		"cpf": "40110166854", <br>
-		"senha":"1234567891" <br>
+		"nome":"Alberto",   <br/>
+		"sobrenome": "Neri",   <br/>
+		"datanascimento": "1993-06-10",   <br/>
+		"rg": "488879865",   <br/>
+		"cpf": "40110166854",   <br/>
+		"senha":"1234567891"   <br/>
 	}
 	
 </code>
 	<p> - Será retornado o 'usuario.id', e o mesmo deve ser guardado para as demais requisições </p>
 
 <code>
-	POST (Login) - {{ _.base_url }}/login &nbsp;
-	Exemplo do body de requisição:
+	POST (Login) - {{ _.base_url }}/login  <br/>
+	Exemplo do body de requisição:  <br/>
 	{
 		"cpf": "40110166854",
 		"senha":"1234567891"
 	}
 
 </code>
-	<p>- Será retornado um token de acesso válido por 10 minutos, após o tempo &nbsp; deverá ser feita uma nova requisição de login para geração de um novo token. 
+	<p>- Será retornado um token de acesso válido por 10 minutos, após o tempo deverá ser feita uma nova requisição de login para geração de um novo token. 
 	</p>
 <h3>Transações</h3>
 <code>
 	POST (Cadastrar uma transação) - {{ _.base_url }}/transacao/:idUsuario &nbsp;
-	Ex.:
+	Ex.:  <br/>
 	{
 		"bandeira": "Elo",
 		"numeroCartao": "123485208562",
