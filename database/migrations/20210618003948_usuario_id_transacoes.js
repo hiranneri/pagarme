@@ -3,7 +3,7 @@ exports.up = function(knex) {
     return knex.schema.table('transacoes', (table)=>{
         table.uuid('usuario_id')
         .references('usuario.id')
-        .notNullable().defaultTo(1)
+        .nullable()
         .references('id')
         .inTable('usuarios')
         .onDelete('CASCADE')
