@@ -5,7 +5,7 @@ module.exports = {
       user: process.env.BANCO_USER,
       password: process.env.BANCO_PASSWORD,
       port: process.env.BANCO_PORT,
-      host: process.env.HOST
+      host: process.env.BANCO_HOST
       
     },
     migrations:{
