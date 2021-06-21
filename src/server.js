@@ -39,7 +39,7 @@ app.use((erro, requisicao, resposta, proximo)=>{
       return resposta.status(403).json({message: erro.message})
   }
   else{
-      console.log(erro)
+      console.log(erro.message)
       return resposta.status(500).json({message: 'Ocorreu um erro interno. Tente novamente mais tarde'})
   }
 
