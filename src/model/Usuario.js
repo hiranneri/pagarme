@@ -16,7 +16,6 @@ class Usuario{
     async criar(){
         this.senha = utils.hashSenha(this.senha);
         const conta = new Conta()
-        conta.criar()
         let usuarioCadastrado = await loginData.create(this, conta);
         this.id = usuarioCadastrado.usuario
            

@@ -1,17 +1,24 @@
+const moment = require('moment');
+
 class Conta{
     constructor(){
-        this.numero = ''
-        this.dataAbertura = ''
-        this.dataFechamento = ''
-    
-    }
-    
-    criar(){
-        this.numero = this.criarConta();        
-        this.dataAbertura = new Date();
+        this._numero = this.gerarNumeroConta()
+        this._dataAbertura = moment(new Date())
+        this._dataFechamento = ''
+        
     }
 
-    criarConta(){
+    get numero(){
+        return this._numero
+    }
+    get dataAbertura(){
+        return this._dataAbertura
+    }
+    get dataFechamento(){
+        return this._dataFechamento
+    }
+    
+    gerarNumeroConta(){
         let numero = (Math.random() * 100000000).toFixed(0);
         let ultimoIndice = numero.length-1;
         let digito = numero[ultimoIndice];

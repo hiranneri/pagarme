@@ -10,7 +10,6 @@ class Cartao{
         this._dataValidade = dataValidade,
         this._codigoVerificacao = codigoVerificacao,
         this._dataCriacao = dataCriacao
-        this.validar()
         this.colocarAstericos()       
         
     }
@@ -66,6 +65,7 @@ class Cartao{
     }
     colocarAstericos(){
         let numero = this._nrCartao
+        numero = numero.replace(/\s/g, '')
         let digitosCartao = numero.slice(-4);
         let numeroCartao = '';
         let vezes = numero.length-4;
