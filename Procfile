@@ -1,1 +1,1 @@
-web: node src/server.js && knex migrate:latest
+web: node src/index.js && knex migrate:latest

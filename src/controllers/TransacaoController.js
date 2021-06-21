@@ -1,7 +1,6 @@
 const Cartao = require('../model/Cartao');
 const Transacao = require('../model/Transacao');
 const TransacaoDAO = require('../DAO/TransacaoDAO');
-const Payables = require('../model/Payables');
 const PayableCredito = require('../model/PayableCredito')
 const PayableDebito = require('../model/PayableDebito')
 const PreenchimentoIncorreto = require('../erros/PreeenchimentoIncorreto')
@@ -15,7 +14,7 @@ module.exports = {
        
         const cartao = new Cartao({bandeira, numeroCartao,nomePortador,dataValidade, 
                 codigoVerificacao})        
-
+        cartao.validar()
         const transacao = new Transacao({cartao,descricao,valor,usuario})
         transacao.validar()
                 
