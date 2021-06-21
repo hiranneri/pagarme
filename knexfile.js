@@ -1,11 +1,11 @@
 module.exports = {  
     client: 'pg',
     connection: {
-      database:'PagarMe',
-      user:'postgres',
-      password: '123',
-      port:'5432',
-      host:'localhost',
+      database: process.env.BANCO_DATABASE,
+      user: process.env.BANCO_USER,
+      password: process.env.BANCO_PASSWORD,
+      port: process.env.BANCO_PORT,
+      host: process.env.HOST
       
     },
     migrations:{
