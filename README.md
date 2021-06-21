@@ -27,7 +27,7 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 # Descrição dos endpoints
  <h3>Login</h3>
 <code> 
-	POST (Cadastro de Usuário) - {{ _.base_url }}/login/cadastro <br>
+	POST (Cadastro de Usuário) - {{ _.base_url }}/login/cadastro &nbsp;
 	Exemplo do body de requisição:
 	{
 		"nome":"Alberto", <br>
@@ -37,23 +37,24 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 		"cpf": "40110166854", <br>
 		"senha":"1234567891" <br>
 	}
-	- Será retornado o 'usuario.id', e o mesmo deve ser guardado para as demais requisições </p>
+	
 </code>
-<code>
+	<p> - Será retornado o 'usuario.id', e o mesmo deve ser guardado para as demais requisições </p>
 
-	POST (Login) - {{ _.base_url }}/login <br>
+<code>
+	POST (Login) - {{ _.base_url }}/login &nbsp;
 	Exemplo do body de requisição:
 	{
 		"cpf": "40110166854",
 		"senha":"1234567891"
 	}
 
-	- Será retornado um token de acesso válido por 10 minutos, após o tempo, deverá ser feita uma nova requisição de login para geração de um novo token.
 </code>
-</br>
+	<p>- Será retornado um token de acesso válido por 10 minutos, após o tempo &nbsp; deverá ser feita uma nova requisição de login para geração de um novo token. 
+	</p>
 <h3>Transações</h3>
 <code>
-	POST (Cadastrar uma transação) - {{ _.base_url }}/transacao/:idUsuario <br>
+	POST (Cadastrar uma transação) - {{ _.base_url }}/transacao/:idUsuario &nbsp;
 	Ex.:
 	{
 		"bandeira": "Elo",
@@ -66,14 +67,13 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 		"formaPagamento": "CRÉDITO",
 		"dataPagamento": "2021-06-20"
 	}
-	- Em caso de sucesso, será retornado o id da transação.
 </code>
-</br>
+<p>	- Em caso de sucesso, será retornado o id da transação. </p>
 <code>
 	GET (Todas as transações para um usuário) - {{ _.base_url }}/transacao/:idUsuario
 </code>
-</br>
-- Todas as requisições, salvo exceção de login, deverão ter no seu header o Content-Type: 'application/json' e x-access-token: '[TOKEN GERADO NO LOGIN]'
+
+<p> - Todas as requisições, salvo exceção de login, deverão ter no seu header o Content-Type: 'application/json' e x-access-token: '[TOKEN GERADO NO LOGIN]' <p>
 
 # Tecnologias Usadas:
 - NodeJS
