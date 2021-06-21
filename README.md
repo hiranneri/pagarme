@@ -26,7 +26,7 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 
 # Descrição dos endpoints
  <h3>Login</h3>
-	<p> POST (Cadastro de Usuário) - {{ _.base_url }}/login/cadastro </p>
+	<code> POST (Cadastro de Usuário) - {{ _.base_url }}/login/cadastro </code>
 	<p> Exemplo do body de requisição:  </p>
 <code> 
 	{
@@ -40,7 +40,7 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 	
 </code>
 	<p> - Será retornado o 'usuario.id', e o mesmo deve ser guardado para as demais requisições </p>
-	<p> POST (Login) - {{ _.base_url }}/login </p>
+	<code> POST (Login) - {{ _.base_url }}/login </code>
 	<p> Exemplo do body de requisição: </p>
 <code>
 	{
@@ -52,7 +52,7 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 	<p>- Será retornado um token de acesso válido por 10 minutos, após o tempo deverá ser feita uma nova requisição de login para geração de um novo token. 
 	</p>
 <h3>Transações</h3>
-	<p>POST (Cadastrar uma transação) - {{ _.base_url }}/transacao/:idUsuario</p>
+	<code> POST (Cadastrar uma transação) - {{ _.base_url }}/transacao/:idUsuario </code>
 	<p>Ex.:</p>
 <code>
 	{
@@ -72,7 +72,7 @@ Se utilizado locamente deverá ser utilizado a "base_url": "http://localhost:333
 	GET (Todas as transações para um usuário) - {{ _.base_url }}/transacao/:idUsuario
 </code>
 
-<p> - Todas as requisições, salvo exceção de login, deverão ter no seu header o Content-Type: 'application/json' e x-access-token: '[TOKEN GERADO NO LOGIN]' <p>
+<p><b> - Todas as requisições, salvo exceção de login, deverão ter no seu header o Content-Type: 'application/json' e x-access-token: '[TOKEN GERADO NO LOGIN]' <b> <p>
 
 # Tecnologias Usadas:
 - NodeJS
