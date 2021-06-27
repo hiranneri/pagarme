@@ -3,7 +3,7 @@ const TransacaoController = require('../../controllers/TransacaoController');
 const Transacao = require('../../model/Transacao');
 const verifyJWT = require('../../middlewares/Autenticacao/index').verifyJWT
 
-router.get('/:id', verifyJWT, async (requisicao, resposta, proximo)=>{
+router.get('/usuario/:id', verifyJWT, async (requisicao, resposta, proximo)=>{
     try {
         const usuarioId = requisicao.params.id
         const transacao = new Transacao({usuario: usuarioId})
@@ -15,7 +15,7 @@ router.get('/:id', verifyJWT, async (requisicao, resposta, proximo)=>{
     }
 })
 
-router.get('/:id/debito', verifyJWT,  async (requisicao, resposta, proximo)=>{
+router.get('/debito/usuario/:id', verifyJWT,  async (requisicao, resposta, proximo)=>{
     try {
         const usuarioId = requisicao.params.id
         const transacao = new Transacao({usuario: usuarioId})
@@ -26,7 +26,7 @@ router.get('/:id/debito', verifyJWT,  async (requisicao, resposta, proximo)=>{
     }   
 })
 
-router.get('/:id/credito', verifyJWT, async (requisicao, resposta, proximo)=>{
+router.get('/credito/usuario/:id', verifyJWT, async (requisicao, resposta, proximo)=>{
     try {
         const usuarioId = requisicao.params.id
         const transacao = new Transacao({usuario: usuarioId})
@@ -37,7 +37,7 @@ router.get('/:id/credito', verifyJWT, async (requisicao, resposta, proximo)=>{
     }   
 })
 
-router.post('/:id', verifyJWT, async (requisicao,resposta,proximo) =>{
+router.post('/usuario/:id', verifyJWT, async (requisicao,resposta,proximo) =>{
     try {
         const id = requisicao.params.id
         const dados = Object.assign({}, requisicao.body, {usuario: id})
