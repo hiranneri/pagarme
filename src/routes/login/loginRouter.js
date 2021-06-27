@@ -6,7 +6,7 @@ const Usuario = require('../../model/Usuario')
 
 
 //Fazer login
-router.post('/', validaLogin, async (req, res, proximo) =>{
+router.post('/login', validaLogin, async (req, res, proximo) =>{
     try {      
         let {cpf, senha} = req.body
         const usuario = new Login({cpf,senha})

@@ -22,7 +22,7 @@ app.use((req,res,next)=>{
 
 
 const routerLogin = require('./routes/login/loginRouter');
-app.use('/login', routerLogin)
+app.use('/', routerLogin)
 
 
 const routerTransacoes = require('./routes/transacoes/transacoesRouter');
