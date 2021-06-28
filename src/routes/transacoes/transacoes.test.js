@@ -7,7 +7,7 @@ describe('Testar rotas de transações', ()=>{
     it('deverá retornar todas as transações do id do Usuário informado', async (done)=>{
         try {
             const res = await request(app)
-                .get(`/transacao/${idUsuario}`)
+                .get(`/transacao/usuario/${idUsuario}`)
                 .set('x-access-token', token)
             
             const quantidadeCartoes = res.body.cartoes;
@@ -24,7 +24,7 @@ describe('Testar rotas de transações', ()=>{
     it('deverá retornar todas as transações de débito do id do Usuário informado', async (done)=>{
         try {
             const res = await request(app)
-                .get(`/transacao/${idUsuario}/debito`)
+                .get(`/transacao/debito/usuario/${idUsuario}`)
                 .set('x-access-token', token)
                             
             const quantidadeCartoes = res.body.cartoes;
@@ -40,7 +40,7 @@ describe('Testar rotas de transações', ()=>{
     it('deverá retornar todas as transações de crédito do id do Usuário informado', async (done)=>{
         try {
             const res = await request(app)
-                .get(`/transacao/${idUsuario}/credito`)
+                .get(`/transacao/credito/usuario/${idUsuario}`)
                 .set('x-access-token', token)
                             
             const quantidadeCartoes = res.body.cartoes;

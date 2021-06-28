@@ -21,7 +21,7 @@ describe('Test my app server', ()=>{
     it('should get cadastro route', async (done)=>{
         try {
             const res = await request(app)
-                .post('/login/cadastro')
+                .post('/cadastro')
                 .send(
                     {
                         "nome":"Alex",
